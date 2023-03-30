@@ -20,8 +20,7 @@ export class FirstPipelineStack extends cdk.Stack {
             synth: new CodeBuildStep('SynthStep', {
                     input: connection,
                     installCommands: [
-                        'npm install -g aws-cdk',
-                        'npm i -g npm@latest'
+                        'npx npm@6 install'
                     ],
                     commands: [
                         'npm ci',
