@@ -8,15 +8,20 @@ export class FirstPipelineStack extends cdk.Stack {
 
         
 
-        const repo = CodePipelineSource.gitHub('YuliiaKurylchyk/HitCounterRepo.git', 'master');
+        const connection =  CodePipelineSource.connection('YuliiaKurylchyk/HitCounterRepo', 'master',
+        {
+            connectionArn: 'arn:aws:codestar-connections:us-east-1:702475694110:connection/9260c345-a8c6-4a3c-83fe-7f2cf75dad06',
+            triggerOnPush: true
+        })
 
 
         const pipeline = new CodePipeline(this, 'Pipeline', {
             pipelineName: 'MyFirstCdkPipeline',
             synth: new CodeBuildStep('SynthStep', {
-                    input: repo,
+                    input: connection,
                     installCommands: [
-                        'npm install -g aws-cdk'
+                        'npm install -g aws-cdk',
+                        'npm i -g npm@latest'
                     ],
                     commands: [
                         'npm ci',
